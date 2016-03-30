@@ -1,0 +1,8 @@
+{
+  "name": "gulp-comps-test",
+  "version": "1.0.0",
+  "description": "Transform and inject resources into HTML template.",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}

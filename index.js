@@ -9,7 +9,7 @@ var colors = gutil.colors
 var comps = require('comps')
 var _ = require('underscore')
 
-function CompsStream(opts, c) {
+function CompsStream(opts, c, transform) {
 	var _comps = c || comps
 	return es.map(function (tpl, cb) {
 		if (tpl.isStream()) {
@@ -22,7 +22,9 @@ function CompsStream(opts, c) {
         }
 
         var template = tpl.contents.toString()
-
+        if (transform) {
+            template = transform(template)
+        }
         var result = _comps(_.extend({}, opts, {
         	template: template,
         	context: path.dirname(tpl.path)

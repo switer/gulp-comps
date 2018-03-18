@@ -20,10 +20,10 @@ function CompsStream(opts, c, transform) {
             this.emit('error', new PluginError(PLUGIN_NAME, 'Template should not be null!'))
             return cb(null, tpl)
         }
-
+        var basename = path.basename(tpl.path)
         var template = tpl.contents.toString()
         if (transform) {
-            template = transform(template)
+            template = transform(template, basename, tpl)
         }
         var result = _comps(_.extend({}, opts, {
         	template: template,
@@ -33,7 +33,7 @@ function CompsStream(opts, c, transform) {
         tpl.contents = new Buffer(result)
 
         gutil.log(
-            PLUGIN_NAME + ': ' + colors.yellow('✔') + ' Compiled ' + colors.blue(path.basename(tpl.path))
+            PLUGIN_NAME + ': ' + colors.yellow('✔') + ' Compiled ' + colors.blue(basename)
         )
         cb(null, tpl)
 	})
